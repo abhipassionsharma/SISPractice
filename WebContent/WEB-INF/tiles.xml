@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="baseLayout" template="/layout/baseLayout.jsp">
+		<put-attribute name="title" value="Student Information System" />
+		<!-- <put-attribute name="banner" value="/layout/banner.jsp" /> -->
+	</definition>
+
+	<definition name="homePage" extends="baseLayout">
+		<!-- <put-attribute name="home" value="/layout/homeBold.jsp" /> -->
+		<put-attribute name="body" value="/home/homePage.jsp" />
+	</definition>
+
+
+</tiles-definitions>

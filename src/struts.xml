@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+		"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+		"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+	<constant name="struts.devMode" value="true" />
+	<package name="default" namespace="/" extends="struts-default">
+	
+		<!-- <result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types> -->
+		
+		<interceptors>
+			<interceptor name="authentication"
+				class="com.iiitb.interceptor.AuthenticationInterceptor"></interceptor>
+			<interceptor-stack name="authStack">
+				<interceptor-ref name="authentication"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+		<global-results>
+			<result name="loginAgain">/login.jsp</result>
+		</global-results>
+
+		<action name="loginpage" class="com.iiitb.action.LoginActionn" method="login">	<!-- loginPage is the url to which we have mapped this class(action mapping) -->
+			<result name="success" type="redirect">/home.action</result>
+			<result name="login">/login.jsp</result>
+			<result name="input">/login.jsp</result>
+		</action>
+
+		<action name="home" class="com.iiitb.action.LoginActionn" method="home">
+			<interceptor-ref name="authStack" />
+			<result name="success">/adminHome.jsp</result>
+			<result name="input">/login.jsp</result>
+		</action>
+
+		<action name="logout" class="com.iiitb.action.LoginActionn" method="logout">
+			<result name="success">/login.jsp</result>
+			<result name="input">/login.jsp</result>
+		</action>
+		
+		<action name="loadAddUserPage">
+		<interceptor-ref name="authStack"/>	<!-- new jsp or page must come through an interceptor -->
+			<result>/addUser.jsp</result>
+		</action>
+		
+		<action name="loadAddCoursePage" class="com.iiitb.action.AddCourseAction" method="loadFaculty">
+		<interceptor-ref name="authStack" />	<!-- new jsp or page must come through an interceptor -->
+			<result name="success">/addCourse.jsp</result>
+		</action>
+		
+		<action name="loadAssignGradesPage" class="com.iiitb.action.GradesAction" method="loadFields">
+		<interceptor-ref name="authStack" />	<!-- new jsp or page must come through an interceptor -->
+			<result name="success">/grades.jsp</result> 
+		</action>
+		
+		<action name="addUser" class="com.iiitb.action.AddUserAction" method="addUser">	
+			<result name="success">/addUser.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="addCourse" class="com.iiitb.action.AddCourseAction" method="addCourse">
+			<result name="success">/addCourse.jsp</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<action name="gradesAction" class="com.iiitb.action.GradesAction" method="assignGrades">
+			<result name="success" type="redirect">loadAssignGradesPage</result>
+			<result name="error">/error.jsp</result>
+		</action>
+		
+		<!-- <action name="layoutAction" class="com.iiitb.action.layout.LayoutAction">
+			<interceptor-ref name="authStack"></interceptor-ref>
+			<result name="success" type="tiles">homePage</result>
+			<result name="login">/login.jsp</result>
+		</action> -->
+
+	</package>
+
+
+
+</struts>
